@@ -16,17 +16,17 @@ Install the required python libs:
 
 Edit the config.ini file and change as follows:
 
-Load_Host - The hostname or IP address of your database
+    Load_Host - The hostname or IP address of your database
 
-Load_Port - The port number the database where the is listening
+    Load_Port - The port number the database where the is listening
 
-Load_User - The username to authenticate to the database with
+    Load_User - The username to authenticate to the database with
 
-Load_Password - The password for the above user
+    Load_Password - The password for the above user
 
-Load_Database - The name of the database you want to query
+    Load_Database - The name of the database you want to query
 
-Load_Limit - The row limit for the queries that are issued
+    Load_Limit - The row limit for the queries that are issued
 
 Run the script:
 `python3 main.py MYSQL`
