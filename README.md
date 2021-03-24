@@ -2,7 +2,7 @@
 Simple query generator for putting a load on a MySQL database
 
 Download the source:
-`git clone git@github.com:tomdaquino/mysql_load_test.git`
+`git clone https://github.com/tomdaquino/mysql_load_test.git`
 
 Create a python virtual environment:
 `python3 -m venv mysql_load_test/venv`
