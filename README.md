@@ -12,6 +12,7 @@ Activate the virtual environment:
 
 Install the required python libs:
 `pip3 install -r requirements.txt`
+**Note that you may need to change the mysql connector version in the requirements.txt file to match that of your MySQL database.
 
 Edit the config.ini file and change as follows:
 
