@@ -6,6 +6,7 @@ from retry import retry
 
 try:
     from connectors.mysql import MySQLDB
+    from connectors.postgresql import PGDB
 except Exception as e:
     sys.exit("{}. Please run 'pip3 install -r requirements.txt'.".format(e))
 
@@ -19,6 +20,8 @@ config.read(config_file)
 
 default = config["DEFAULT"]
 mysql_config = config["MYSQL"]
+pg_config = config["PG"]
+pg_config["query_count"] = config["DEFAULT"]["Load_QueryCount"]
 
 def print_table(table):
     if not table: return
@@ -31,7 +34,9 @@ def print_table(table):
 def connect(db_type, isReconnect=False):
     if db_type == "mysql":
         return MySQLDB(mysql_config, isReconnect)
-    sys.exit("Please specify the database type as MYSQL'")
+    if db_type == "pg":
+        return PGDB(pg_config)
+    sys.exit("Please specify the database type as MYSQL|PG'")
 
 # @retry(tries=100, delay=10)
 def run_with_retry(query_count, db_type):
@@ -42,7 +47,7 @@ def run_with_retry(query_count, db_type):
             run_with_retry.counter += 1
             print("QUERY COUNT: {}".format(run_with_retry.counter))
             ret = db_obj.query(db_obj.random_query_generator())
-            if db_type in ['mysql']:
+            if db_type in ['mysql', 'pg']:
                 print_table(ret)
             else:
                 pprint.pprint(ret.next())
@@ -61,7 +66,7 @@ def run_with_retry(query_count, db_type):
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         sys.exit(
-            "Please use the syntax 'python3 main.py MYSQL'")
+            "Please use the syntax 'python3 main.py MYSQL|PG'")
     query_count = int(default["Load_QueryCount"])
     run_with_retry.counter = 1
     db_obj = None
